@@ -50,3 +50,121 @@ class TestPhysics(TestCase):
             physics.gravity = [1,2,3]
             self.assertEqual(physics.gravity, [1,2,3])
         bge.logic.setGravity.assert_called_once_with([1,2,3])
+
+    def test_detectHit_allParameters(self):
+        bge = Mock()
+
+        sourcePosition = "sp"
+        targetPosition = "tp"
+        distance = "dist"
+        filterProperty = "fp"
+        normalDirection = "nd"
+        excludeUnfiltered = False
+        hitObject = "ho"
+        hitPosition = "hp"
+        hitNormal = "hn"
+
+        mock = MagicMock(
+            return_value=[hitObject, hitPosition, hitNormal])
+        bge.logic.getCurrentScene().active_camera.rayCast = mock
+
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import physics
+            hit = physics.detectHit(sourcePosition, targetPosition, distance,
+                                    filterProperty, normalDirection, excludeUnfiltered)
+            self.assertEqual(hit.object, hitObject)
+            self.assertEqual(hit.position, hitPosition)
+            self.assertEqual(hit.normal, hitNormal)
+
+        bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
+                sourcePosition, targetPosition, distance,
+                filterProperty, normalDirection, excludeUnfiltered, 0)
+
+    def test_detectHit_only_mandatoryParameters(self):
+        bge = Mock()
+
+        sourcePosition = "sp"
+        targetPosition = "tp"
+        distance = "dist"
+        hitObject = "ho"
+        hitPosition = "hp"
+        hitNormal = "hn"
+
+        mock = MagicMock(
+            return_value=[hitObject, hitPosition, hitNormal])
+        bge.logic.getCurrentScene().active_camera.rayCast = mock
+
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import physics
+            hit = physics.detectHit(sourcePosition, targetPosition, distance)
+            self.assertEqual(hit.object, hitObject)
+            self.assertEqual(hit.position, hitPosition)
+            self.assertEqual(hit.normal, hitNormal)
+
+            bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
+                    sourcePosition, targetPosition, distance,
+                    "", 0, 0, 0)
+
+    def test_detectFaceHit_allParameters(self):
+        bge = Mock()
+
+        sourcePosition = "sp"
+        targetPosition = "tp"
+        distance = "dist"
+        filterProperty = "fp"
+        normalDirection = "nd"
+        excludeUnfiltered = True
+        hitObject = "ho"
+        hitPosition = "hp"
+        hitNormal = "hn"
+        hitFace = "fa"
+
+        mock = MagicMock(
+            return_value=[hitObject, hitPosition, hitNormal, hitFace])
+        bge.logic.getCurrentScene().active_camera.rayCast = mock
+
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import physics
+            hit = physics.detectFaceHit(sourcePosition, targetPosition, distance,
+                                    filterProperty, normalDirection, excludeUnfiltered)
+            self.assertEqual(hit.object, hitObject)
+            self.assertEqual(hit.position, hitPosition)
+            self.assertEqual(hit.normal, hitNormal)
+            self.assertEqual(hit.face, hitFace)
+
+        bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
+                sourcePosition, targetPosition, distance,
+                filterProperty, normalDirection, 1, 1)
+
+    def test_detectUvFaceHit_allParameters(self):
+        bge = Mock()
+
+        sourcePosition = "sp"
+        targetPosition = "tp"
+        distance = "dist"
+        filterProperty = "fp"
+        normalDirection = "nd"
+        excludeUnfiltered = True
+        hitObject = "ho"
+        hitPosition = "hp"
+        hitNormal = "hn"
+        hitFace = "fa"
+        hitUv = "hu"
+
+        mock = MagicMock(
+            return_value=[hitObject, hitPosition, hitNormal, hitFace, hitUv])
+        bge.logic.getCurrentScene().active_camera.rayCast = mock
+
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import physics
+            hit = physics.detectUvFaceHit(sourcePosition, targetPosition, distance,
+                                    filterProperty, normalDirection, excludeUnfiltered)
+            self.assertEqual(hit.object, hitObject)
+            self.assertEqual(hit.position, hitPosition)
+            self.assertEqual(hit.normal, hitNormal)
+            self.assertEqual(hit.face, hitFace)
+            self.assertEqual(hit.uv, hitUv)
+
+        bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
+                sourcePosition, targetPosition, distance,
+                filterProperty, normalDirection, 1, 2)
