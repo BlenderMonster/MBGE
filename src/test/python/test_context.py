@@ -20,7 +20,7 @@ class TestContext(TestCase):
     def test_getOwner(self):
         bge = Mock()
 
-        bge.logic.getCurrentController.owner = Mock(return_value="owner")
+        bge.logic.getCurrentController().owner = "owner"
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import context
             self.assertEqual(context.owner, "owner")
@@ -36,7 +36,7 @@ class TestContext(TestCase):
     def test_getScenes(self):
         bge = Mock()
 
-        bge.logic.getSceneList = Mock(return_value="scene")
+        bge.logic.getSceneList = Mock(return_value="[scene]")
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import context
-            self.assertEqual(context.scenes, "scenes")
+            self.assertEqual(context.scenes, "[scene]")
