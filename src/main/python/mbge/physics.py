@@ -44,62 +44,56 @@ class UvFaceHit(FaceHit):
         return "<{}>{{object: {}, position: {}, normal {}, face: {}, uv: {}}}".format(
             self.__class__.__name__, self.object, self.position, self.normal, self.face, self.uv)
 
-class Module(types.ModuleType):
+NORMAL_FACE_NORMAL = 1
+NORMAL_TOWARDS_SOURCE = 0
 
-    NORMAL_FACE_NORMAL = 1
-    NORMAL_TOWARDS_SOURCE = 0
 
-    def __init__(self, name):
-        self.__name__ = name
-        self._gravity = None
+_gravity = None
 
-    @property
-    def gravity(self):
-        return self._gravity
+@property
+def gravity(self):
+    return self._gravity
 
-    @gravity.setter
-    def gravity(self, gravity):
-        self._gravity = gravity
-        return bge.logic.setGravity(gravity)
+@gravity.setter
+def gravity(self, gravity):
+    self._gravity = gravity
+    return bge.logic.setGravity(gravity)
 
-    @property
-    def maxFrames(self):
-        return bge.logic.getMaxPhysicsFrame()
+@property
+def maxFrames(self):
+    return bge.logic.getMaxPhysicsFrame()
 
-    @maxFrames.setter
-    def maxFrames(self, numberOfFrames):
-        bge.logic.setMaxPhysicsFrame(numberOfFrames)
+@maxFrames.setter
+def maxFrames(self, numberOfFrames):
+    bge.logic.setMaxPhysicsFrame(numberOfFrames)
 
-    @property
-    def frameRate(self):
-        return bge.logic.getPhysicsTicRate()
+@property
+def frameRate(self):
+    return bge.logic.getPhysicsTicRate()
 
-    @frameRate.setter
-    def frameRate(self, rate):
-        bge.logic.setPhysicsTicRate(rate)
+@frameRate.setter
+def frameRate(self, rate):
+    bge.logic.setPhysicsTicRate(rate)
 
-    def detectHit(self, sourcePosition, targetPosition, distance,
-                        filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
-        detector = bge.logic.getCurrentScene().active_camera
-        return Hit(*detector.rayCast(sourcePosition, targetPosition, distance,
+def detectHit(self, sourcePosition, targetPosition, distance,
+                    filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
+    detector = bge.logic.getCurrentScene().active_camera
+    return Hit(*detector.rayCast(sourcePosition, targetPosition, distance,
+                                 filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
+                                 DETECT_HIT))
+
+def detectFaceHit(self, sourcePosition, targetPosition, distance,
+                    filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
+    detector = bge.logic.getCurrentScene().active_camera
+    return FaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
                                      filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                     DETECT_HIT))
+                                     DETECT_FACE_HIT))
 
-    def detectFaceHit(self, sourcePosition, targetPosition, distance,
-                        filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
-        detector = bge.logic.getCurrentScene().active_camera
-        return FaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
-                                         filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                         DETECT_FACE_HIT))
+def detectUvFaceHit(self, sourcePosition, targetPosition, distance,
+                    filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
+    detector = bge.logic.getCurrentScene().active_camera
+    return UvFaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
+                                       filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
+                                       DETECT_UV_FACE_HIT))
 
-    def detectUvFaceHit(self, sourcePosition, targetPosition, distance,
-                        filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
-        detector = bge.logic.getCurrentScene().active_camera
-        return UvFaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
-                                           filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                           DETECT_UV_FACE_HIT))
-
-module = Module(__name__)
-module._module = sys.modules[module.__name__]
-module._pmodule = module
-sys.modules[module.__name__] = module
+import mprop; mprop.init()
