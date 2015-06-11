@@ -40,3 +40,12 @@ class TestContext(TestCase):
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import context
             self.assertEqual(context.scenes, "[scene]")
+
+    def test_doc(self):
+        bge = Mock()
+
+        bge.logic.getSceneList = Mock(return_value="[scene]")
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import context
+            print(dir(context))
+            print(help(context))

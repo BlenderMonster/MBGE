@@ -67,8 +67,8 @@ def init(glbls=None):
 
     module = sys.modules[name]
     if isinstance(sys.modules[name], types.ModuleType):
-        # Every module must have a new class to ensure that the module itself
-        # has its own unique properties.
+        ''' Every module must have a new class to ensure that the module itself
+        has its own unique properties.'''
         class Module(object):
             def __repr__(self):
                 return "<Module %r>"%(self.__name__,)

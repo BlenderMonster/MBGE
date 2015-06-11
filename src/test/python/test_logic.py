@@ -26,5 +26,9 @@ class TestPhysics(TestCase):
 
         bge.logic.setMaxLogicFrame.assert_called_once_with(7)
 
-
+    def test_doc(self):
+         with patch.dict('sys.modules', {'bge': Mock()}):
+            from mbge import logic
+            print(dir(logic))
+            print(help(logic))
 

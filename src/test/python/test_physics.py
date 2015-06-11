@@ -71,7 +71,9 @@ class TestPhysics(TestCase):
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import physics
             hit = physics.detectHit(sourcePosition, targetPosition, distance,
-                                    filterProperty, normalDirection, excludeUnfiltered)
+                                    filterProperty=filterProperty,
+                                    normalDirection=normalDirection,
+                                    excludeUnfiltered=excludeUnfiltered)
             self.assertEqual(hit.object, hitObject)
             self.assertEqual(hit.position, hitPosition)
             self.assertEqual(hit.normal, hitNormal)
@@ -168,3 +170,10 @@ class TestPhysics(TestCase):
         bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
                 sourcePosition, targetPosition, distance,
                 filterProperty, normalDirection, 1, 2)
+
+
+    def test_doc(self):
+         with patch.dict('sys.modules', {'bge': Mock()}):
+            from mbge import physics
+            print(dir(physics))
+            print(help(physics))

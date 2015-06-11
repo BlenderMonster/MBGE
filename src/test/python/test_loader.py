@@ -39,8 +39,8 @@ class TestPhysics(TestCase):
         bge.logic.LibNew = Mock(return_value=4)
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import loader
-            self.assertEqual(loader.copy("copied", loader.DATA_BLOCK_SCENE,  ["a", "b"]), 4)
-        bge.logic.LibNew.assert_called_once_with("copied", loader.DATA_BLOCK_SCENE, ["a", "b"] )
+            self.assertEqual(loader.copyMesh("copied",  ["a", "b"]), 4)
+        bge.logic.LibNew.assert_called_once_with("copied", loader.DATA_BLOCK_MESH, ["a", "b"] )
 
     def test_unload(self):
         bge = Mock()
@@ -50,3 +50,9 @@ class TestPhysics(TestCase):
             from mbge import loader
             self.assertEqual(loader.unload("unload"), 9)
         bge.logic.LibFree.assert_called_once_with("unload" )
+
+    def test_doc(self):
+         with patch.dict('sys.modules', {'bge': Mock()}):
+            from mbge import loader
+            print(dir(loader))
+            print(help(loader))

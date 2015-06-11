@@ -12,9 +12,9 @@ import types
 import sys
 import bge
 
-DETECT_HIT = 0
-DETECT_FACE_HIT = 1
-DETECT_UV_FACE_HIT = 2
+_DETECT_HIT = 0
+_DETECT_FACE_HIT = 1
+_DETECT_UV_FACE_HIT = 2
 
 class Hit(object):
     def __init__(self, hitObject, hitPosition, HitNormal):
@@ -52,6 +52,7 @@ _gravity = None
 
 @property
 def gravity(self):
+    'The current gravity. Can only be returned when explicitly set with this property. Otherwise it returns None.'
     return self._gravity
 
 @gravity.setter
@@ -61,6 +62,7 @@ def gravity(self, gravity):
 
 @property
 def maxFrames(self):
+    'The maximum number of physics frames per render frame.'
     return bge.logic.getMaxPhysicsFrame()
 
 @maxFrames.setter
@@ -69,6 +71,7 @@ def maxFrames(self, numberOfFrames):
 
 @property
 def frameRate(self):
+    'The physics update frequency per second.'
     return bge.logic.getPhysicsTicRate()
 
 @frameRate.setter
@@ -76,24 +79,27 @@ def frameRate(self, rate):
     bge.logic.setPhysicsTicRate(rate)
 
 def detectHit(self, sourcePosition, targetPosition, distance,
-                    filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
+              **kwargs):
+    'Detects the first face that gets hit by a line from source along target over distance.'
     detector = bge.logic.getCurrentScene().active_camera
     return Hit(*detector.rayCast(sourcePosition, targetPosition, distance,
-                                 filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                 DETECT_HIT))
+                                 kwargs.get("filterProperty", ""),
+                                 kwargs.get('normalDirection', NORMAL_TOWARDS_SOURCE),
+                                 1 if kwargs.get('excludeUnfiltered', False) else 0,
+                                 _DETECT_HIT))
 
 def detectFaceHit(self, sourcePosition, targetPosition, distance,
                     filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
     detector = bge.logic.getCurrentScene().active_camera
     return FaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
                                      filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                     DETECT_FACE_HIT))
+                                     _DETECT_FACE_HIT))
 
 def detectUvFaceHit(self, sourcePosition, targetPosition, distance,
                     filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
     detector = bge.logic.getCurrentScene().active_camera
     return UvFaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
                                        filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
-                                       DETECT_UV_FACE_HIT))
+                                       _DETECT_UV_FACE_HIT))
 
 import mprop; mprop.init()
