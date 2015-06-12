@@ -79,7 +79,13 @@ def frameRate(self, rate):
 
 def detectHit(self, sourcePosition, targetPosition, distance,
               **kwargs):
-    'Detects the first face that gets hit by a line from source along target over distance.'
+    '''
+    Detects the first face that gets hit by a line from source along target over distance.
+    :keyword filterProperty: property name that an hit object needs to have
+    :keyword normalDirection: NORMAL_TOWARDS_SOURCE, NORMAL_FACE_NORMAL
+    :keyword excludeUnfiltered: True = ignores faces of objects without filter property
+                                False = faces of objects without filter property block the detection
+    '''
     detector = bge.logic.getCurrentScene().active_camera
     return Hit(*detector.rayCast(sourcePosition, targetPosition, distance,
                                  kwargs.get("filterProperty", ""),
@@ -89,6 +95,16 @@ def detectHit(self, sourcePosition, targetPosition, distance,
 
 def detectFaceHit(self, sourcePosition, targetPosition, distance,
                     filterProperty="", normalDirection=NORMAL_TOWARDS_SOURCE, excludeUnfiltered=False):
+    '''
+
+    :param sourcePosition:
+    :param targetPosition:
+    :param distance:
+    :param filterProperty:
+    :param normalDirection:
+    :param excludeUnfiltered:
+    :return:
+    '''
     detector = bge.logic.getCurrentScene().active_camera
     return FaceHit(*detector.rayCast(sourcePosition, targetPosition, distance,
                                      filterProperty, normalDirection, 1 if excludeUnfiltered else 0,
