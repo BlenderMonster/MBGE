@@ -1,10 +1,8 @@
 '''
-bge.logic
+mbge.logic
 =========
 
-This is a mock of the bge api's logic module.
-It allows to use code completion against the bge modules.
-The functions do not do anything.
+This module provides access to the games logic settings.
 '''
 __author__ = 'Monster'
 

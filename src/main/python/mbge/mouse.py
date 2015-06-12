@@ -1,3 +1,9 @@
+'''
+mbge.mouse
+==========
+
+This module provides access to common mouse functions.
+'''
 import types
 import sys
 import bge

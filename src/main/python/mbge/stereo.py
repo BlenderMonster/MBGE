@@ -1,16 +1,6 @@
-'''
-mbge.render
-===========
-
-This module provides access to the render settings
-'''
 import types
 import sys
 import bge
-
-KX_TEXFACE_MATERIAL = bge.render.KX_TEXFACE_MATERIAL
-KX_BLENDER_MULTITEX_MATERIAL = bge.render.KX_BLENDER_MULTITEX_MATERIAL
-KX_BLENDER_GLSL_MATERIAL = bge.render.KX_BLENDER_GLSL_MATERIAL
 
 @property
 def width(self):
@@ -48,15 +38,6 @@ def displayWidth(self):
 def displayHeight(self):
     'The actual height of the physical display (e.g., the monitor) in Pixels (readonly).'
     return bge.render.getDisplayDimensions()[1]
-
-@property
-def materialMode(self):
-    'The material mode to use for OpenGL rendering. Changes will only affect newly created scenes.'
-    return bge.render.getMaterialMode()
-
-@materialMode.setter
-def materialMode(self, materialMode):
-    bge.render.setMaterialMode(materialMode)
 
 def saveFrameBuffer(self, filename):
     '''
