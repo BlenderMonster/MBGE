@@ -6,4 +6,5 @@ import mbge.logic
 import mbge.mouse
 import mbge.physics
 import mbge.render
+import mbge.stereo
 import mbge.storage

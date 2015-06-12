@@ -95,6 +95,23 @@ class TestRender(TestCase):
             with self.assertRaises(AttributeError):
                 render.displayHeight = 89
 
+    def test_materialMode_get(self):
+        bge = Mock()
+
+        bge.render.getMaterialMode = Mock(return_value="a")
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import render
+            self.assertEqual(render.materialMode, "a")
+
+    def test_materialMode_set(self):
+        bge = Mock()
+
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import render
+            render.materialMode = 33
+
+        bge.render.setMaterialMode.assert_called_once_with(33)
+
     def test_saveFrameBuffer(self):
         bge = Mock()
 

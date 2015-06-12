@@ -7,41 +7,37 @@ import sys
 __author__ = 'Monster'
 
 
-class TestStorage(TestCase):
+class TestStereo(TestCase):
 
-    def test_storedContent_get(self):
+    def test_focalLength_get(self):
         bge = Mock()
 
-        dictionary = {1:2}
-        bge.logic.globalDict = dictionary
+        bge.render.getMaterialMode = Mock(return_value="focalLength")
         with patch.dict('sys.modules', {'bge': bge}):
-            from mbge import storage
-            self.assertEqual(storage.storedContent, dictionary)
+            from mbge import stereo
+            self.assertEqual(stereo.focalLength, "focalLength")
 
-    def test_storedContent_set(self):
-        bge = Mock()
-
-        dictionary = {1:2}
-
-        with patch.dict('sys.modules', {'bge': bge}):
-            from mbge import storage
-            storage.storedContent = dictionary
-        self.assertEqual(bge.logic.globalDict, dictionary)
-
-    def test_loadFromFile(self):
+    def test_focalLength_set(self):
         bge = Mock()
 
         with patch.dict('sys.modules', {'bge': bge}):
-            from mbge import storage
-            storage.loadFromFile()
+            from mbge import stereo
+            stereo.focalLength = 123
+        bge.render.setFocalLength.assert_called_once_with(123)
 
-        bge.logic.loadGlobalDict.assert_called_once_with()
+    def test_eyeSeparation_get(self):
+        bge = Mock()
 
-    def test_saveToFile(self):
+        bge.render.getEyeSeparation = Mock(return_value="eyeSeparation")
+        with patch.dict('sys.modules', {'bge': bge}):
+            from mbge import stereo
+            self.assertEqual(stereo.eyeSeparation, "eyeSeparation")
+
+    def test_eyeSeparation_set(self):
         bge = Mock()
 
         with patch.dict('sys.modules', {'bge': bge}):
-            from mbge import storage
-            storage.saveToFile()
+            from mbge import stereo
+            stereo.eyeSeparation = "eyeSeparation"
+        bge.render.setEyeSeparation.assert_called_once_with("eyeSeparation")
 
-        bge.logic.saveGlobalDict.assert_called_once_with()
