@@ -71,9 +71,9 @@ class TestPhysics(TestCase):
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import physics
             hit = physics.detectHit(sourcePosition, targetPosition, distance,
-                                    filterProperty=filterProperty,
+                                    property=filterProperty,
                                     normalDirection=normalDirection,
-                                    excludeUnfiltered=excludeUnfiltered)
+                                    xray=excludeUnfiltered)
             self.assertEqual(hit.object, hitObject)
             self.assertEqual(hit.position, hitPosition)
             self.assertEqual(hit.normal, hitNormal)
@@ -87,7 +87,6 @@ class TestPhysics(TestCase):
 
         sourcePosition = "sp"
         targetPosition = "tp"
-        distance = "dist"
         hitObject = "ho"
         hitPosition = "hp"
         hitNormal = "hn"
@@ -98,13 +97,13 @@ class TestPhysics(TestCase):
 
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import physics
-            hit = physics.detectHit(sourcePosition, targetPosition, distance)
+            hit = physics.detectHit(sourcePosition, targetPosition)
             self.assertEqual(hit.object, hitObject)
             self.assertEqual(hit.position, hitPosition)
             self.assertEqual(hit.normal, hitNormal)
 
             bge.logic.getCurrentScene().active_camera.rayCast.assert_called_once_with(
-                    sourcePosition, targetPosition, distance,
+                    sourcePosition, targetPosition, 0,
                     "", 0, 0, 0)
 
     def test_detectFaceHit_allParameters(self):
@@ -128,7 +127,9 @@ class TestPhysics(TestCase):
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import physics
             hit = physics.detectFaceHit(sourcePosition, targetPosition, distance,
-                                    filterProperty, normalDirection, excludeUnfiltered)
+                                    property=filterProperty,
+                                    normalDirection=normalDirection,
+                                    xray=excludeUnfiltered)
             self.assertEqual(hit.object, hitObject)
             self.assertEqual(hit.position, hitPosition)
             self.assertEqual(hit.normal, hitNormal)
@@ -160,7 +161,9 @@ class TestPhysics(TestCase):
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import physics
             hit = physics.detectUvFaceHit(sourcePosition, targetPosition, distance,
-                                    filterProperty, normalDirection, excludeUnfiltered)
+                                    property=filterProperty,
+                                    normalDirection=normalDirection,
+                                    xray=excludeUnfiltered)
             self.assertEqual(hit.object, hitObject)
             self.assertEqual(hit.position, hitPosition)
             self.assertEqual(hit.normal, hitNormal)
