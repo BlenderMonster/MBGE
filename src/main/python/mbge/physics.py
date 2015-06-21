@@ -7,8 +7,6 @@ including face detection.
 '''
 __author__ = 'Monster'
 
-import types
-import sys
 import bge
 
 _DETECT_HIT = 0

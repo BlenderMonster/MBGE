@@ -5,8 +5,6 @@ mbge.context
 This module provides access to the context
 the current code is running in.
 '''
-import types
-import sys
 import bge
 
 @property

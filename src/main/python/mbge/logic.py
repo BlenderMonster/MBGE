@@ -6,8 +6,6 @@ This module provides access to the games logic settings.
 '''
 __author__ = 'Monster'
 
-import types
-import sys
 import bge
 
 @property

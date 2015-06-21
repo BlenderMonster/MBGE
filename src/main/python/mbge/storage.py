@@ -8,8 +8,6 @@ The functions do not do anything.
 '''
 __author__ = 'Monster'
 
-import types
-import sys
 import bge
 
 @property

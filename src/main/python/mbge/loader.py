@@ -6,8 +6,6 @@ This module provides access to load data into the running scene.
 '''
 __author__ = 'Monster'
 
-import types
-import sys
 import bge
 
 

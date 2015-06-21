@@ -4,8 +4,6 @@ mbge.render
 
 This module provides access to the render settings
 '''
-import types
-import sys
 import bge
 
 KX_BLENDER_MULTITEX_MATERIAL = bge.render.KX_BLENDER_MULTITEX_MATERIAL
