@@ -1,5 +1,3 @@
-import types
-import sys
 import bge
 
 @property
@@ -23,7 +21,7 @@ def hitObjects(self):
     objects = []
     for sensor in bge.logic.getCurrentController().sensors:
         try:
-            objects = objects + sensor.hitObjectList
+            objects = objects + list(sensor.hitObjectList)
         except AttributeError:
             try:
                 objects.append(sensor.hitObject)
@@ -36,7 +34,7 @@ def bodies(self):
     foundBodies = []
     for sensor in bge.logic.getCurrentController().sensors:
         try:
-            foundBodies = foundBodies + sensor.bodies
+            foundBodies = foundBodies + list(sensor.bodies)
         except AttributeError:
             continue
     return foundBodies
