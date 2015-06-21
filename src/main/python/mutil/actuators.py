@@ -1,5 +1,3 @@
-import types
-import sys
 import bge
 
 def activateAll(self):
