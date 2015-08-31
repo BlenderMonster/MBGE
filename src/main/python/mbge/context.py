@@ -27,4 +27,10 @@ def scenes(self):
     'the current scenes (readonly)'
     return bge.logic.getSceneList()
 
+def findScene(self, name):
+    'returns the scene with the given name'
+    for scene in self.scenes:
+        if scene.name == name:
+            return scene
+
 import mprop; mprop.init()
