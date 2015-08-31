@@ -43,14 +43,14 @@ def injectData(self, libraryName, dataBlockType, data, **flags):
         libraryName, dataBlockType, data,
         flags)
 
-def copyMesh(self, targetLibraryName, sourceLibraryNames):
+def copyMesh(self, targetLibraryName, meshNames):
     '''
     Copies an existing mesh.
     :param targetLibraryName
-    :param sourceLibraryNames
-    :return: a list of KX_MeshProxy
+    :param meshNames - a list of meshes to be copied
+    :return: a list of KX_MeshProxy with new unique names
     '''
-    return bge.logic.LibNew(targetLibraryName, DATA_BLOCK_MESH, sourceLibraryNames)
+    return bge.logic.LibNew(targetLibraryName, DATA_BLOCK_MESH, meshNames)
 
 def unload(self, libraryName):
     '''
