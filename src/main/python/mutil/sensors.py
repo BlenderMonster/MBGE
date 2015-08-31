@@ -30,6 +30,19 @@ def hitObjects(self):
     return objects
 
 @property
+def hitPositions(self):
+    positions = []
+    for sensor in bge.logic.getCurrentController().sensors:
+        try:
+            positions = positions + (sensor.hitPosition)
+        except AttributeError:
+            try:
+                positions.append(sensor.hitPosition)
+            except AttributeError:
+                continue
+    return positions
+
+@property
 def bodies(self):
     foundBodies = []
     for sensor in bge.logic.getCurrentController().sensors:
