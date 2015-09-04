@@ -1,10 +1,8 @@
 '''
-bge.logic
+mbge.storage
 =========
 
-This is a mock of the bge api's logic module.
-It allows to use code completion against the bge modules.
-The functions do not do anything.
+This module provides build-in store/restore and save/load.
 '''
 __author__ = 'Monster'
 
@@ -12,6 +10,7 @@ import bge
 
 @property
 def storedContent(self):
+    'A storage that can be saved to file. Store marshallable objects only.'
     return bge.logic.globalDict
 
 @storedContent.setter
