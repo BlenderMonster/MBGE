@@ -1,3 +1,11 @@
+'''
+mbge.storage
+=========
+
+This module provides access to attributes related to stereo display.
+'''
+__author__ = 'Monster'
+
 import bge
 
 @property
