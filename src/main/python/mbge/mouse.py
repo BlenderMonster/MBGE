@@ -31,7 +31,7 @@ def visible(self):
 
 @visible.setter
 def visible(self, visible):
-    bge.render.mouse.visible = visible
+    bge.logic.mouse.visible = visible
 
 @property
 def events(self):
