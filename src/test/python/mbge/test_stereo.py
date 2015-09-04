@@ -1,8 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
-from unittest.mock import Mock, PropertyMock, MagicMock;
-
-import sys
+from unittest.mock import Mock
 
 __author__ = 'Monster'
 
@@ -12,7 +10,7 @@ class TestStereo(TestCase):
     def test_focalLength_get(self):
         bge = Mock()
 
-        bge.render.getMaterialMode = Mock(return_value="focalLength")
+        bge.render.getFocalLength = Mock(return_value="focalLength")
         with patch.dict('sys.modules', {'bge': bge}):
             from mbge import stereo
             self.assertEqual(stereo.focalLength, "focalLength")
