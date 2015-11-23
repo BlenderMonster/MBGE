@@ -48,18 +48,6 @@ NORMAL_FACE_NORMAL = 1
 NORMAL_TOWARDS_SOURCE = 0
 
 
-_gravity = None
-
-@property
-def gravity(self):
-    'The current gravity. Can only be returned when explicitly set with this property. Otherwise it returns None.'
-    return self._gravity
-
-@gravity.setter
-def gravity(self, gravity):
-    self._gravity = gravity
-    return bge.logic.setGravity(gravity)
-
 @property
 def maxFrames(self):
     'The maximum number of physics frames per render frame.'
